@@ -8,7 +8,7 @@ namespace dkdsp {
         public:
         DRingBuf<T>(std::size_t size) :
         read(0),
-        write(size),
+        write(size-1),
         count(0),
         max(size)
         {
@@ -24,7 +24,7 @@ namespace dkdsp {
         T pop() {
             if (is_empty()) throw std::runtime_error("Is empty");
             T item = data[read];
-            T empty_item;
+            T empty_item = 0;
             count--;
             data[read] = empty_item;
             read = (read + 1) % max;
